@@ -43,6 +43,7 @@ parser.add_argument('-buffer_gpu', type=str2bool, help='#Store buffer in GPU?', 
 parser.add_argument('-portfolio', type=int, help='Portfolio ID',  default=10)
 parser.add_argument('-total_steps', type=float, help='#Total steps in the env in millions ',  default=2)
 parser.add_argument('-batchsize', type=int, help='Seed',  default=256)
+parser.add_argument('-noise', type=float, help='Noise STD',  default=0.01)
 
 
 POP_SIZE = vars(parser.parse_args())['pop_size']
@@ -56,6 +57,7 @@ SEED = vars(parser.parse_args())['seed']
 GPU_DEVICE = vars(parser.parse_args())['gpu_id']
 PORTFOLIO_ID = vars(parser.parse_args())['portfolio']
 TOTAL_STEPS = int(vars(parser.parse_args())['total_steps'] * 1000000)
+NOISE_STD = int(vars(parser.parse_args())['noise'])
 os.environ["CUDA_VISIBLE_DEVICES"]=str(GPU_DEVICE)
 
 #ICML EXPERIMENT
@@ -82,7 +84,7 @@ class Parameters:
 		self.algo = ALGO
 
 		self.batch_size = BATCHSIZE #Batch size
-		self.noise_std = 0.1 #Gaussian noise exploration std
+		self.noise_std = NOISE_STD #Gaussian noise exploration std
 		self.ucb_coefficient = 0.9 #Exploration coefficient in UCB
 		self.gradperstep = GRADPERSTEP
 		self.buffer_gpu = BUFFER_GPU
@@ -340,7 +342,7 @@ if __name__ == "__main__":
 	args = Parameters()  # Create the Parameters class
 	SAVETAG = SAVETAG + '_p' + str(PORTFOLIO_ID)
 	SAVETAG = SAVETAG + '_s' + str(SEED)
-	if ISOLATE_PG: SAVETAG = SAVETAG + '_pg'
+	SAVETAg = SAVETAG + 'std' + str(NOISE_STD)
 
 	frame_tracker = utils.Tracker(args.savefolder, ['score_'+ENV_NAME+SAVETAG], '.csv')  #Tracker class to log progress
 	max_tracker = utils.Tracker(args.aux_folder, ['pop_max_score_'+ENV_NAME+SAVETAG], '.csv')  #Tracker class to log progress FOR MAX (NOT REPORTED)
