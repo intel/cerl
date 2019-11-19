@@ -57,7 +57,7 @@ SEED = vars(parser.parse_args())['seed']
 GPU_DEVICE = vars(parser.parse_args())['gpu_id']
 PORTFOLIO_ID = vars(parser.parse_args())['portfolio']
 TOTAL_STEPS = int(vars(parser.parse_args())['total_steps'] * 1000000)
-NOISE_STD = int(vars(parser.parse_args())['noise'])
+NOISE_STD = vars(parser.parse_args())['noise']
 os.environ["CUDA_VISIBLE_DEVICES"]=str(GPU_DEVICE)
 
 #ICML EXPERIMENT
@@ -191,7 +191,7 @@ class CERL_Agent:
 		#5 Test workers
 		self.test_task_pipes = [Pipe() for _ in range(TEST_SIZE)]
 		self.test_result_pipes = [Pipe() for _ in range(TEST_SIZE)]
-		self.test_workers = [Process(target=rollout_worker, args=(id, self.test_task_pipes[id][1], self.test_result_pipes[id][0], False, None, self.test_bucket, ENV_NAME, args.noise_std, ALGO)) for id in range(TEST_SIZE)]
+		self.test_workers = [Process(target=rollout_worker, args=(id, self.test_task_pipes[id][1], self.test_result_pipes[id][0], False, None, self.test_bucket, ENV_NAME, None, ALGO)) for id in range(TEST_SIZE)]
 		for worker in self.test_workers: worker.start()
 		self.test_flag = False
 
@@ -342,7 +342,7 @@ if __name__ == "__main__":
 	args = Parameters()  # Create the Parameters class
 	SAVETAG = SAVETAG + '_p' + str(PORTFOLIO_ID)
 	SAVETAG = SAVETAG + '_s' + str(SEED)
-	SAVETAg = SAVETAG + 'std' + str(NOISE_STD)
+	SAVETAg = SAVETAG + 'noise' + str(NOISE_STD)
 
 	frame_tracker = utils.Tracker(args.savefolder, ['score_'+ENV_NAME+SAVETAG], '.csv')  #Tracker class to log progress
 	max_tracker = utils.Tracker(args.aux_folder, ['pop_max_score_'+ENV_NAME+SAVETAG], '.csv')  #Tracker class to log progress FOR MAX (NOT REPORTED)
@@ -363,7 +363,7 @@ if __name__ == "__main__":
 		#PRINT PROGRESS
 		print('Env', ENV_NAME, 'Gen', gen, 'Frames', agent.total_frames, ' Pop_max/max_ever:','%.2f'%best_score, '/','%.2f'%agent.best_score, ' Avg:','%.2f'%frame_tracker.all_tracker[0][1],
 		      ' Frames/sec:','%.2f'%(agent.total_frames/(time.time()-time_start)),
-			  ' Champ_len', '%.2f'%test_len, ' Test_score u/std', utils.pprint(test_mean), utils.pprint(test_std), 'savetag', SAVETAG, )
+			  ' Champ_len', '%.2f'%test_len, ' Test_score u/std', utils.pprint(test_mean), utils.pprint(test_std), 'savetag', SAVETAG, 'noise', args.noise_std)
 
 		# # PRINT MORE DETAILED STATS PERIODICALLY
 		if gen % 5 == 0:
