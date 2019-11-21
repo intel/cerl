@@ -92,9 +92,9 @@ class Parameters:
 
 		#NeuroEvolution stuff
 		self.pop_size = POP_SIZE
-		self.elite_fraction = 0.2
-		self.crossover_prob = 0.15
-		self.mutation_prob = 0.90
+		self.elite_fraction = 0.3
+		self.crossover_prob = 0.1
+		self.mutation_prob = 0.1
 
 		#######unused########
 		self.extinction_prob = 0.005  # Probability of extinction event
