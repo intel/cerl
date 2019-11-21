@@ -151,11 +151,11 @@ class SSNE:
 				None
 
 		"""
-		mut_strength = 0.1
-		num_mutation_frac = 0.05
-		super_mut_strength = 10
-		super_mut_prob = 0.05
-		reset_prob = super_mut_prob + 0.02
+		mut_strength = 0.02
+		num_mutation_frac = 0.03
+		super_mut_strength = 1.0
+		super_mut_prob = 0.1
+		reset_prob = super_mut_prob + 0.1
 
 		num_params = len(list(gene.parameters()))
 		ssne_probabilities = np.random.uniform(0, 1, num_params) * 2
