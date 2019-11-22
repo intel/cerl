@@ -43,7 +43,7 @@ parser.add_argument('-buffer_gpu', type=str2bool, help='#Store buffer in GPU?', 
 parser.add_argument('-portfolio', type=int, help='Portfolio ID',  default=10)
 parser.add_argument('-total_steps', type=float, help='#Total steps in the env in millions ',  default=2)
 parser.add_argument('-batchsize', type=int, help='Seed',  default=256)
-parser.add_argument('-noise', type=float, help='Noise STD',  default=0.01)
+parser.add_argument('-noise', type=float, help='Noise STD',  default=0.1)
 
 
 POP_SIZE = vars(parser.parse_args())['pop_size']
