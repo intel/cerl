@@ -1,3 +1,7 @@
+# DISCONTINUATION OF PROJECT #
+This project will no longer be maintained by Intel.
+Intel has ceased development and contributions including, but not limited to, maintenance, bug fixes, new releases, or updates, to this project.
+Intel no longer accepts patches to this project.
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
 Codebase for [Collaborative Evolutionary Reinforcement Learning](https://arxiv.org/pdf/1905.00976.pdf) accepted to be published in the Proceedings of the 36th International Conference on Machine Learning, Long Beach, California, PMLR 97, 2019. Copyright 2019 by the author(s).
